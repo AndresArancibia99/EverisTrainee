@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--Profe uni el js con el html para que se pueda enviar, igualmente lo subire al github Saludos Andrés Arancibia !-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+
+
+</head>
+
+<body style="background-color: #3a7bd5;">
+    
+    <br><br>
+    <!--Inicia el formulario con las variables nota1 a la 4 y el examen, le damos un onekeyup para validar los campos
+    tambien le asignamos las id para ocuparlo en el script y un contenedor para centrarlo -->
+    <form>
+        <div class="container">
+            <div class="row text-center justify-content-md-center mb-3">
+                <br>
+                <h2>Calculadora de Promedio</h2>
+                <br>
+                <br>
+                <br>
+                <div class="col col-lg-2">
+                    Nota 1:
+                </div>
+                <div class="col col-lg-2">
+                    <input class="form-control" type="text" id="nota1" onkeyup="validar(this)">
+                </div>
+                <div class="col col-lg-2" id="error1">
+                   
+                </div>
+            </div>
+            <div class="row text-center justify-content-md-center mb-3">
+                <div class="col col-lg-2">
+                    Nota 2:
+                </div>
+                <div class="col col-lg-2">
+                    <input class="form-control" type="text" id="nota2" onkeyup="validar(this)">
+                </div>
+                <div class="col col-lg-2" id="error2">
+                    
+                </div>
+            </div>
+            <div class="row text-center justify-content-md-center mb-3">
+                <div class="col col-lg-2">
+                    Nota 3:
+                </div>
+                <div class="col col-lg-2">
+                    <input class="form-control" type="text" id="nota3" onkeyup="validar(this)">
+                </div>
+                <div class="col col-lg-2" id="error3">
+                    
+                </div>
+            </div>
+            <div class="row text-center justify-content-md-center mb-3">
+                <div class="col col-lg-2">
+                    Nota 4:
+                </div>
+                <div class="col col-lg-2">
+                    <input class="form-control" type="text" id="nota4" onkeyup="validar(this)">
+                </div>
+                <div class="col col-lg-2" id="error4">
+                   
+                </div>
+            </div>
+            <div class="row text-center justify-content-md-center mb-3">
+                <div class="col col-lg-2">
+                    Examen:
+                </div>
+                <div class="col col-lg-2">
+                    <input class="form-control" type="text" id="examen" onkeyup="validar(this)">
+                </div>
+                <div class="col col-lg-2" id="error5">
+                    
+                </div>
+            </div>
+            <div class="row text-center justify-content-md-center mb-6">
+                <span>Nota Promedio: <span id="notaParcial"></span> </span>
+                <br>
+                <span>Nota final: <span id="notaFinal"> </span> </span>
+                <br>
+                <span>Situación: <span id="situacion"></span> </span>
+                <br>
+                <div class="col col-lg-1">
+                </span>
+                <div class="col col-lg-2">
+                   <input type="button" class="btn btn-success" id="botonvalidar" value="Calcular"
+                   onclick="validarcampos();">
+                   <br>
+                   <br>
+                   <input type="reset" class="btn btn-warning" id="botonlimpiar" value="Limpiar">
+                </div>
+                
+            </div>
+            <div class="row text-center justify-content-md-center mb-2">
+                <div class="col col-lg-3">
+
+                    <div id="mensajefinal"></div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </form>
+</body>
+<script>
+    //arreglo con las notas ingresadas
+var arreglonotas = new Array();
+arreglonotas['nota1']="error1";
+arreglonotas['nota2']="error2";
+arreglonotas['nota3']="error3";
+arreglonotas['nota4']="error4";
+arreglonotas['examen']="error5";
+    //validando los campos para ver si son correctos, 
+function validar(dato){
+    if(dato.value < 1 || dato.value > 7){
+        document.getElementById(arreglonotas[dato.id]).innerHTML ='<div class="alert alert-warning" role="alert"> Ingrese nuevamente la nota</div>';
+        return false;
+    }
+    else{
+        document.getElementById(arreglonotas[dato.id]).innerHTML ="";
+    }
+    return true;
+
+}
+
+
+//Validar todos los campos para que sea funcional
+function validarcampos(){
+    document.getElementById('mensajefinal').innerHTML = '';
+    for(i in arreglonotas){
+        //valido
+                      if(document.getElementById(arreglonotas[i]).innerHTML != ""){
+                        document.getElementById('mensajefinal').innerHTML = '<div class="alert alert-danger" role="alert"> Hay campos no completados!</div>';
+                         return false;
+        }
+    }
+    var datos = new Array();
+     datos[0]=document.getElementById('nota1').value;
+     datos[1]=document.getElementById('nota2').value;
+     datos[2]=document.getElementById('nota3').value;
+     datos[3]=document.getElementById('nota4').value;
+     datos[4]=document.getElementById('examen').value;
+                 var Promedio = (parseFloat(datos[0]) + parseFloat(datos[2]) + parseFloat(datos[3]) +  parseFloat(datos[4]))/4;
+                 var promediofinal = Promedio*0.7 + parseFloat(datos[4])*0.3
+                         document.getElementById("notaParcial").innerHTML = Promedio;
+                             document.getElementById("notaFinal").innerHTML = promediofinal.toFixed(2);;
+                                // si el promedio o el promedio final es inferior a la nota 4.0 el alumno repuebra
+                                      if( Promedio<4.0 || promediofinal<4.0){
+                                       document.getElementById("situacion").innerHTML = "No tiene nota superior a 4.0 Reprobado.";
+                                               document.getElementById("situacion").style = "color: red";
+                                                             }
+                                          else{
+                                         document.getElementById("situacion").innerHTML = "tiene nota superior a 4.0 Aprobado.";
+                                          document.getElementById("situacion").style = "color: green";
+                                             }
+
+                }
+//finaliza el script !
+</script>
+</html>
